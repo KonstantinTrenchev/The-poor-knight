@@ -15,6 +15,14 @@ run/main_scene="uid://cl4yhi1nkyt5"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
+[display]
+
+window/stretch/mode="canvas_items"
+
 [dotnet]
 
 project/assembly_name="The Poor Knight"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
