@@ -1,6 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://b7ufvmtq60cna"]
+[gd_scene load_steps=14 format=3 uid="uid://b7ufvmtq60cna"]
 
+[ext_resource type="Script" uid="uid://dtikxxwqymq37" path="res://Scripts/player.gd" id="1_cvnsp"]
 [ext_resource type="Texture2D" uid="uid://bvcmitkxtlfa7" path="res://Assets/sprites/knight.png" id="1_v0iea"]
+[ext_resource type="Script" uid="uid://by2qkuc3b24vo" path="res://Scripts/hurtbox.gd" id="3_vgqql"]
+[ext_resource type="Script" uid="uid://di8nvj1gpclri" path="res://Scripts/health_component.gd" id="4_fkybt"]
+[ext_resource type="PackedScene" uid="uid://bcw8vb1cfwpfh" path="res://Scenes/hitbox.tscn" id="5_fkybt"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cvnsp"]
 atlas = ExtResource("1_v0iea")
@@ -41,7 +45,16 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_3smsa"]
 radius = 5.0
 
-[node name="Player" type="CharacterBody2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x3wgy"]
+size = Vector2(10.5, 10)
+
+[sub_resource type="SeparationRayShape2D" id="SeparationRayShape2D_fkybt"]
+length = 23.0
+
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
+collision_layer = 2
+script = ExtResource("1_cvnsp")
+kill_jump = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 z_index = 1
@@ -49,8 +62,35 @@ position = Vector2(-1, -12)
 sprite_frames = SubResource("SpriteFrames_x3wgy")
 animation = &"idle"
 autoplay = "idle"
-frame_progress = 0.5533095
+frame_progress = 0.40636247
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, -6)
 shape = SubResource("CircleShape2D_3smsa")
+
+[node name="InvincibilityTimer" type="Timer" parent="." groups=["Player"]]
+wait_time = 3.0
+one_shot = true
+
+[node name="Hurtbox_Component" type="Area2D" parent="." node_paths=PackedStringArray("health_component")]
+script = ExtResource("3_vgqql")
+health_component = NodePath("../Health_Component")
+metadata/_custom_type_script = "uid://by2qkuc3b24vo"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox_Component"]
+position = Vector2(-1, -7)
+shape = SubResource("RectangleShape2D_x3wgy")
+
+[node name="Health_Component" type="Node" parent="."]
+script = ExtResource("4_fkybt")
+metadata/_custom_type_script = "uid://di8nvj1gpclri"
+
+[node name="JumpingBox" parent="." instance=ExtResource("5_fkybt")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="JumpingBox"]
+position = Vector2(0, -9)
+shape = SubResource("SeparationRayShape2D_fkybt")
+
+[connection signal="timeout" from="InvincibilityTimer" to="Health_Component" method="_on_invincibility_timer_timeout"]
+[connection signal="dead" from="Health_Component" to="." method="_on_health_component_dead"]
+[connection signal="health_changed" from="Health_Component" to="." method="_on_health_component_health_changed"]
