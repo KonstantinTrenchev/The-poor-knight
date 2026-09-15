@@ -4,6 +4,7 @@ extends Node
 signal dead
 signal health_changed(new_amount)
 @onready var invincibility_timer: Timer = $"../InvincibilityTimer"
+@onready var animated_sprite: AnimatedSprite2D = $"../AnimatedSprite2D"
 @export  var max_health := 3.0
 var isInvincible
 var current_health: float
@@ -21,11 +22,15 @@ func _damage(attack:float) -> void:
 	if temp_health!=current_health:
 		current_health=temp_health
 		if current_health<= 0:
+			animated_sprite.play("dead")
+			await animated_sprite.animation_finished
 			dead.emit()
 			return
 		print("Ouch. %s got hurt %.1d health left out of %d max health" %[get_parent().name,current_health, max_health])
 		if invincibility_timer!=null:
 			print("%s is now invincible for %.1f seconds" %[get_parent().name,invincibility_timer.wait_time])
+		animated_sprite.play("hurt")
+		await animated_sprite.animation_finished
 	health_changed.emit(current_health)
 	
 
