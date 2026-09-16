@@ -1,56 +1,71 @@
-class_name Player
 extends CharacterBody2D
-@onready var health_component: Health_Component = $Health_Component
-@onready var jumping_box: Hitbox = $JumpingBox
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
-@onready var dead_timer: Timer = $DeadTimer
-const SPEED = 150.0
-const JUMP_VELOCITY = -400.0
+@onready var hurtbox_component: Hurtbox_Component = $Hurtbox_Component
+@onready var health_component: Health_Component = $Health_Component
+@onready var jump_cast: RayCast2D = $Jump_cast
+@onready var jumping_hit_box_down: Hitbox = $JumpingHitBox_DOWN
+@onready var jumping_hit_box_up: Hitbox = $JumpingHitBox_UP
+var  speed = 150
+var  default_speed = 150
+var  jump_velocity = -400.0
 var last_save_position
+var  play_loops = true
 @export var  kill_jump:bool
+
 func _ready() -> void:
 	add_to_group("Player")
 	health_component.current_health = health_component.max_health
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
-	if not is_on_floor():
+	if !jump_cast.is_colliding():
 		velocity += get_gravity() * delta
-	if is_on_floor():
+	if jump_cast.is_colliding():
 		last_save_position = global_position
+
 	# Handle jump.
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
+	if Input.is_action_just_pressed("jump") and jump_cast.is_colliding():
+		velocity.y = jump_velocity
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var direction := Input.get_axis("move_left", "move_right")
-	if animated_sprite_2d.is_playing() != true:
-		if is_on_floor():
+	if play_loops:
+		if jump_cast.is_colliding():
 			if direction == 0:
 				animated_sprite_2d.play("idle")
 			else :
 				animated_sprite_2d.play("run")
 		else:
 			animated_sprite_2d.play("jump")
-	if direction:
-		velocity.x = direction * SPEED
-		if direction <0:
-			animated_sprite_2d.flip_h = true
-		elif direction > 0 :
-			animated_sprite_2d.flip_h = false
+		if direction:
+			velocity.x = direction * speed
+			if direction <0:
+				animated_sprite_2d.flip_h = true
+			elif direction > 0 :
+				animated_sprite_2d.flip_h = false
+		else:
+			velocity.x = move_toward(velocity.x, 0, speed)
+	if Input.is_action_pressed("sprint"):
+		speed = default_speed * 2
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-
+		speed = default_speed
 	move_and_slide()
 
 
-
 func _on_health_component_dead() -> void:
+	hurtbox_component.set_deferred("disabled", true)
+	play_loops = false;
 	print("You dead.")
+	if animated_sprite_2d.animation != "dead":
+		animated_sprite_2d.play("dead")
+		await animated_sprite_2d.animation_finished
 	get_tree().call_deferred("reload_current_scene")
 
-	
 
 func _on_health_component_health_changed(_new_amount: Variant) -> void:
-		global_position = last_save_position
-	
+	play_loops = false
+	if animated_sprite_2d.animation != "hurt":
+		animated_sprite_2d.play("hurt")
+		await animated_sprite_2d.animation_finished
+	global_position = last_save_position
+	play_loops = true

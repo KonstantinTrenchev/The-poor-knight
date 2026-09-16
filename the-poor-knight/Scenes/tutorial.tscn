@@ -418,7 +418,6 @@ distance = -124.0
 unique_name_in_owner = true
 z_index = 1
 position = Vector2(-112, -236)
-kill_jump = false
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(105, 27)
