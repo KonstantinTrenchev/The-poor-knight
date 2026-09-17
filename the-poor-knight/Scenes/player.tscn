@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://b7ufvmtq60cna"]
+[gd_scene load_steps=32 format=3 uid="uid://b7ufvmtq60cna"]
 
 [ext_resource type="Script" uid="uid://dtikxxwqymq37" path="res://Scripts/player.gd" id="1_cvnsp"]
 [ext_resource type="Texture2D" uid="uid://bvcmitkxtlfa7" path="res://Assets/sprites/knight.png" id="1_v0iea"]
@@ -187,6 +187,9 @@ radius = 5.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x3wgy"]
 size = Vector2(10.5, 12)
 
+[sub_resource type="SeparationRayShape2D" id="SeparationRayShape2D_fkybt"]
+length = 5.0
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fkybt"]
 size = Vector2(10, 8)
 
@@ -198,7 +201,7 @@ script = ExtResource("1_cvnsp")
 z_index = 1
 position = Vector2(0, -12)
 sprite_frames = SubResource("SpriteFrames_x3wgy")
-animation = &"hurt"
+animation = &"dead"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -226,10 +229,11 @@ metadata/_custom_type_script = "uid://di8nvj1gpclri"
 attack_damage = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="JumpingHitBox_DOWN"]
-position = Vector2(-1, 6)
-shape = SubResource("RectangleShape2D_fkybt")
+position = Vector2(0, 1)
+shape = SubResource("SeparationRayShape2D_fkybt")
 
 [node name="JumpingHitBox_UP" parent="." instance=ExtResource("5_fkybt")]
+position = Vector2(0, 1)
 attack_damage = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="JumpingHitBox_UP"]

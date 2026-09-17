@@ -31,6 +31,4 @@ func _on_health_component_dead() -> void:
 	remove_from_group("Enemies")
 
 
-func _on_health_component_health_changed(_new_amount: Variant) -> void:
-		position.x+= speed /4.0
-		speed = 0
+	

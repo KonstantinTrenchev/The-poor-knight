@@ -8,8 +8,10 @@ func _init() -> void:
 
 
 func _on_area_entered(area: Area2D) -> void:
-	var hitter = get_parent().get_groups()[0]
-	var hittee = area.get_parent().get_groups()[0]
-	if area is Hurtbox_Component and hitter!=hittee:
-		print("%s hit %s" %[hitter,hittee])
-		area._take_damage(attack_damage)
+	var  hitter = get_parent()
+	var  hittee = area.get_parent()
+	var hitter_main_group = hitter.get_groups()[0]
+	var hittee_main_group = hittee.get_groups()[0]
+	if area is Hurtbox_Component and hitter_main_group!=hittee_main_group:
+		print("%s hit %s" %[hitter_main_group,hittee_main_group])
+		area._take_damage(attack_damage, hitter)
