@@ -5,13 +5,13 @@ signal health_changed(new_amount)
 @onready var invincibility_timer: Timer = $"../InvincibilityTimer"
 @onready var animated_sprite: AnimatedSprite2D = $"../AnimatedSprite2D"
 @export  var max_health := 3.0
-@onready var hurtbox_component: Hurtbox_Component = $"../Hurtbox_Component"
+@onready var hurtbox_component: Hurtbox_Component = $"../Hurtbox"
 var is_Invincible: bool
 var is_hurt: bool
 var current_health: float
 func _ready() -> void:
 	current_health = max_health
-func _damage(attack:float, hitter: Node) -> void:
+func _damage(attack:float) -> void:
 	var temp_health: = current_health
 	if invincibility_timer != null:
 		if is_Invincible:
@@ -21,7 +21,6 @@ func _damage(attack:float, hitter: Node) -> void:
 	temp_health-=attack
 	if temp_health!=current_health:
 		is_hurt = true
-		hitter.global_position.x+=15
 		get_parent().speed = 0;
 		current_health=temp_health
 		if current_health<= 0:

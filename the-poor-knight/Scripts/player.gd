@@ -1,6 +1,6 @@
 extends CharacterBody2D
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var hurtbox_component: Hurtbox_Component = $Hurtbox_Component
+@onready var hurtbox_component: Hurtbox_Component = $Hurtbox
 @onready var health_component: Health_Component = $Health_Component
 @onready var jump_cast: RayCast2D = $Jump_cast
 @onready var jumping_hit_box_down: Hitbox = $JumpingHitBox_DOWN
@@ -9,8 +9,9 @@ extends CharacterBody2D
 @export var  default_speed = 150
 var  jump_velocity = -400.0
 var last_save_position
-var  play_loops = true
+var direction = 0
 @export var  kill_jump:bool
+
 
 func _ready() -> void:
 	add_to_group("Player")
@@ -21,14 +22,13 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * delta
 	if jump_cast.is_colliding():
 		last_save_position = global_position
-
 	# Handle jump.
 	if Input.is_action_just_pressed("jump") and jump_cast.is_colliding():
 		velocity.y = jump_velocity
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction := Input.get_axis("move_left", "move_right")
+	direction = Input.get_axis("move_left","move_right")
 	if !health_component.is_hurt:
 		if jump_cast.is_colliding():
 			if direction == 0:

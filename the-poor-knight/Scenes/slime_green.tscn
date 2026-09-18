@@ -126,12 +126,13 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vww16"]
-size = Vector2(10, 11)
+size = Vector2(8, 11)
 
 [node name="Slime_Green" type="Node2D" groups=["Enemies"]]
 script = ExtResource("1_vww16")
 
 [node name="Hurtbox" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("4_bffjp")]
+collision_layer = 2
 health_component = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
@@ -145,11 +146,13 @@ animation = &"hurt"
 autoplay = "default"
 
 [node name="Hitbox" type="Area2D" parent="."]
+position = Vector2(-1, 0)
+collision_layer = 2
 script = ExtResource("2_vryu8")
 metadata/_custom_type_script = "uid://dbvh7bbsj742e"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2(1, 5.5)
+position = Vector2(1, 5)
 shape = SubResource("RectangleShape2D_vww16")
 
 [node name="RayCastRight" type="RayCast2D" parent="."]
