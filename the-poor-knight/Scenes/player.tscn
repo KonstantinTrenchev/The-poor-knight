@@ -185,16 +185,16 @@ animations = [{
 radius = 5.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x3wgy"]
-size = Vector2(10.5, 7)
+size = Vector2(8, 6)
 
-[sub_resource type="SeparationRayShape2D" id="SeparationRayShape2D_fkybt"]
-length = 5.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3smsa"]
+size = Vector2(6, 4)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fkybt"]
-size = Vector2(10, 8)
+size = Vector2(4, 8)
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
-collision_layer = 2
+collision_layer = 4
 script = ExtResource("1_cvnsp")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -213,13 +213,14 @@ wait_time = 3.0
 one_shot = true
 
 [node name="Hurtbox" type="Area2D" parent="." node_paths=PackedStringArray("health_component")]
-collision_mask = 2
+collision_layer = 2
+collision_mask = 4
 script = ExtResource("3_vgqql")
 health_component = NodePath("../Health_Component")
 metadata/_custom_type_script = "uid://by2qkuc3b24vo"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
-position = Vector2(-1, -5.5)
+position = Vector2(-1, -6)
 shape = SubResource("RectangleShape2D_x3wgy")
 
 [node name="Health_Component" type="Node" parent="."]
@@ -227,20 +228,22 @@ script = ExtResource("4_fkybt")
 metadata/_custom_type_script = "uid://di8nvj1gpclri"
 
 [node name="JumpingHitBox_DOWN" parent="." instance=ExtResource("5_fkybt")]
-collision_mask = 6
+collision_layer = 2
+collision_mask = 14
 attack_damage = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="JumpingHitBox_DOWN"]
-position = Vector2(0, 1)
-shape = SubResource("SeparationRayShape2D_fkybt")
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_3smsa")
 
 [node name="JumpingHitBox_UP" parent="." instance=ExtResource("5_fkybt")]
 position = Vector2(0, 1)
-collision_mask = 6
+collision_layer = 2
+collision_mask = 14
 attack_damage = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="JumpingHitBox_UP"]
-position = Vector2(-1, -19)
+position = Vector2(-1, -25)
 shape = SubResource("RectangleShape2D_fkybt")
 
 [node name="DeadTimer" type="Timer" parent="."]

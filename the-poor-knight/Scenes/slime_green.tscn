@@ -1,35 +1,25 @@
-[gd_scene load_steps=23 format=3 uid="uid://bdtf27hj1uh7"]
+[gd_scene load_steps=16 format=3 uid="uid://t43cbhtkvvlj"]
 
 [ext_resource type="Texture2D" uid="uid://m1oflwjcawmb" path="res://Assets/sprites/slime_green.png" id="1_vryu8"]
-[ext_resource type="Script" uid="uid://0kocn0m7hrrr" path="res://Scripts/slime_green.gd" id="1_vww16"]
-[ext_resource type="Script" uid="uid://dbvh7bbsj742e" path="res://Scripts/hitbox.gd" id="2_vryu8"]
-[ext_resource type="PackedScene" uid="uid://edkcoo3a7dfb" path="res://Scenes/hurtbox.tscn" id="4_bffjp"]
-[ext_resource type="PackedScene" uid="uid://07r637qc0b8x" path="res://Scenes/health_component.tscn" id="5_igiay"]
+[ext_resource type="PackedScene" uid="uid://bdtf27hj1uh7" path="res://Scenes/enemy.tscn" id="1_vww16"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_bffjp"]
-size = Vector2(16, 14)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4cvib"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_vryu8"]
 atlas = ExtResource("1_vryu8")
 region = Rect2(48, 24, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_61s6y"]
-atlas = ExtResource("1_vryu8")
-region = Rect2(24, 24, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_g7gx8"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_vww16"]
 atlas = ExtResource("1_vryu8")
 region = Rect2(72, 0, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_nn5a4"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_4cvib"]
 atlas = ExtResource("1_vryu8")
 region = Rect2(48, 0, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_tym2r"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_61s6y"]
 atlas = ExtResource("1_vryu8")
 region = Rect2(24, 0, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_46b8d"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_g7gx8"]
 atlas = ExtResource("1_vryu8")
 region = Rect2(0, 0, 24, 24)
 
@@ -49,25 +39,15 @@ region = Rect2(48, 24, 24, 24)
 atlas = ExtResource("1_vryu8")
 region = Rect2(72, 24, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_3leox"]
-atlas = ExtResource("1_vryu8")
-region = Rect2(0, 48, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jefls"]
-atlas = ExtResource("1_vryu8")
-region = Rect2(24, 48, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_k0dyc"]
-atlas = ExtResource("1_vryu8")
-region = Rect2(48, 48, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_xx0oe"]
-atlas = ExtResource("1_vryu8")
-region = Rect2(72, 48, 24, 24)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_4cvib"]
 animations = [{
 "frames": [{
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_vryu8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vww16")
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_4cvib")
 }, {
@@ -76,19 +56,10 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_g7gx8")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_nn5a4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_tym2r")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_46b8d")
 }],
 "loop": false,
 "name": &"dead",
-"speed": 3.0
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -103,67 +74,36 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ovw3v")
 }],
-"loop": true,
+"loop": false,
 "name": &"default",
 "speed": 10.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3leox")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jefls")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_k0dyc")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xx0oe")
-}],
-"loop": false,
-"name": &"hurt",
-"speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vww16"]
-size = Vector2(8, 11)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_61s6y"]
+size = Vector2(6, 6)
 
-[node name="Slime_Green" type="Node2D" groups=["Enemies"]]
-script = ExtResource("1_vww16")
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g7gx8"]
+size = Vector2(16, 13)
 
-[node name="Hurtbox" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("4_bffjp")]
-collision_layer = 2
-health_component = NodePath("../HealthComponent")
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nn5a4"]
+size = Vector2(12, 11)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
-position = Vector2(1, 5)
-shape = SubResource("RectangleShape2D_bffjp")
+[node name="Slime_green" instance=ExtResource("1_vww16")]
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(1, 0)
+[node name="AnimatedSprite2D" parent="." index="0"]
+position = Vector2(0, -7)
 sprite_frames = SubResource("SpriteFrames_4cvib")
-animation = &"hurt"
-autoplay = "default"
 
-[node name="Hitbox" type="Area2D" parent="."]
-position = Vector2(-1, 0)
-collision_layer = 2
-script = ExtResource("2_vryu8")
-metadata/_custom_type_script = "uid://dbvh7bbsj742e"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2(1, 5)
-shape = SubResource("RectangleShape2D_vww16")
-
-[node name="RayCastRight" type="RayCast2D" parent="."]
-position = Vector2(3, 6)
-target_position = Vector2(6, 0)
-
-[node name="RayCastLeft" type="RayCast2D" parent="."]
-position = Vector2(-5, 6)
-target_position = Vector2(-5, 0)
-
-[node name="HealthComponent" parent="." instance=ExtResource("5_igiay")]
+[node name="HealthComponent" parent="." index="1"]
 max_health = 1.0
 
-[connection signal="dead" from="HealthComponent" to="." method="_on_health_component_dead"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" index="0"]
+shape = SubResource("RectangleShape2D_61s6y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" index="0"]
+position = Vector2(0, -1.5)
+shape = SubResource("RectangleShape2D_g7gx8")
+
+[node name="CollisionShape2D" parent="." index="6"]
+position = Vector2(0, -1.5)
+shape = SubResource("RectangleShape2D_nn5a4")

@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://bhnapexiubx8q"]
+
+[ext_resource type="Script" uid="uid://176fnmkgfpgw" path="res://Scripts/projectile.gd" id="1_f8cdk"]
+
+[node name="Projectile" type="CharacterBody2D"]
+script = ExtResource("1_f8cdk")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(2, 0)

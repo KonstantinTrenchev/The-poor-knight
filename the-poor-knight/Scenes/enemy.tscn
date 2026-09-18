@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://bdtf27hj1uh7"]
+
+[ext_resource type="Script" uid="uid://bwokq7yo2fdr1" path="res://Scripts/enemy.gd" id="1_vww16"]
+[ext_resource type="PackedScene" uid="uid://bcw8vb1cfwpfh" path="res://Scenes/hitbox.tscn" id="2_afpow"]
+[ext_resource type="PackedScene" uid="uid://edkcoo3a7dfb" path="res://Scenes/hurtbox.tscn" id="4_bffjp"]
+[ext_resource type="PackedScene" uid="uid://07r637qc0b8x" path="res://Scenes/health_component.tscn" id="5_igiay"]
+
+[node name="enemy" type="CharacterBody2D"]
+collision_layer = 2
+script = ExtResource("1_vww16")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+
+[node name="HealthComponent" parent="." instance=ExtResource("5_igiay")]
+
+[node name="Hitbox" parent="." instance=ExtResource("2_afpow")]
+collision_layer = 4
+collision_mask = 2
+
+[node name="Hurtbox" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("4_bffjp")]
+collision_layer = 4
+collision_mask = 14
+health_component = NodePath("../HealthComponent")
+
+[node name="RayCast_LEFT" type="RayCast2D" parent="."]
+position = Vector2(-3, 0)
+target_position = Vector2(-8, 0)
+
+[node name="RayCast_RIGHT" type="RayCast2D" parent="."]
+position = Vector2(3, 0)
+target_position = Vector2(8, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[connection signal="dead" from="HealthComponent" to="." method="_on_health_component_dead"]

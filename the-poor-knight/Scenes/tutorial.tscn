@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dhymwv01od172" path="res://Assets/sprites/world_tileset.png" id="3_omtrn"]
 [ext_resource type="PackedScene" uid="uid://de2pd6vwr518k" path="res://Scenes/platform_grass.tscn" id="4_i6t4g"]
 [ext_resource type="PackedScene" uid="uid://bk6o84hilyaou" path="res://Scenes/coin.tscn" id="5_p8jf4"]
-[ext_resource type="PackedScene" uid="uid://bdtf27hj1uh7" path="res://Scenes/slime_green.tscn" id="6_p1f1o"]
+[ext_resource type="PackedScene" uid="uid://t43cbhtkvvlj" path="res://Scenes/slime_green.tscn" id="6_p1f1o"]
 [ext_resource type="Script" uid="uid://dbvh7bbsj742e" path="res://Scripts/hitbox.gd" id="6_ys4pu"]
 
 [sub_resource type="Animation" id="Animation_p8jf4"]
@@ -417,7 +417,7 @@ distance = -124.0
 [node name="Player" parent="." instance=ExtResource("1_ka2pi")]
 unique_name_in_owner = true
 z_index = 1
-position = Vector2(-112, -236)
+position = Vector2(882, -302)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(105, 27)
@@ -489,10 +489,10 @@ metadata/_custom_type_script = "uid://dbvh7bbsj742e"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World_Boundry" groups=["World_Boundries"]]
 shape = SubResource("WorldBoundaryShape2D_h2ono")
 
-[node name="Slime_Green" parent="." instance=ExtResource("6_p1f1o")]
-position = Vector2(773, -231)
+[node name="Slime_green" parent="." instance=ExtResource("6_p1f1o")]
+position = Vector2(776, -226)
 
-[node name="Slime_Green2" parent="." instance=ExtResource("6_p1f1o")]
-position = Vector2(984, -231)
+[node name="Slime_green2" parent="." instance=ExtResource("6_p1f1o")]
+position = Vector2(984, -228)
 
 [connection signal="body_exited" from="Coins/Coin" to="Player" method="_on_coin_body_exited"]
