@@ -483,6 +483,7 @@ tile_map_data = PackedByteArray("AADt/wQAAAAAAA0AAADt/wMAAAAAAAwAAADt/wIAAAAAAAs
 tile_set = SubResource("TileSet_ys4pu")
 
 [node name="World_Boundry" type="Area2D" parent="." groups=["World_Boundries"]]
+collision_mask = 7
 script = ExtResource("6_ys4pu")
 metadata/_custom_type_script = "uid://dbvh7bbsj742e"
 
@@ -491,8 +492,12 @@ shape = SubResource("WorldBoundaryShape2D_h2ono")
 
 [node name="Slime_green" parent="." instance=ExtResource("6_p1f1o")]
 position = Vector2(776, -226)
+collision_layer = 4
+collision_mask = 3
 
 [node name="Slime_green2" parent="." instance=ExtResource("6_p1f1o")]
 position = Vector2(984, -228)
+collision_layer = 4
+collision_mask = 3
 
 [connection signal="body_exited" from="Coins/Coin" to="Player" method="_on_coin_body_exited"]
